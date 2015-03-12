@@ -1,0 +1,7 @@
+services:
+
+    cache_flusher:
+        class: %cache_flusher.class%
+        arguments:
+            - @cache_flusher.event_dispatcher
+            - %kernel.cache_dir%

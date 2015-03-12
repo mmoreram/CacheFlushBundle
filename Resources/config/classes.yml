@@ -1,0 +1,4 @@
+parameters:
+
+    cache_flusher.class: Mmoreram\CacheFlushBundle\Services\CacheFlusher
+    cache_flusher.event_dispatcher.class: Mmoreram\CacheFlushBundle\EventDispatcher\CacheFlusherEventDispatcher

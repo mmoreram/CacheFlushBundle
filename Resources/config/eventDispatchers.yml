@@ -1,0 +1,9 @@
+services:
+
+    #
+    # Event Dispatchers
+    #
+    cache_flusher.event_dispatcher:
+        class: %cache_flusher.event_dispatcher.class%
+        arguments:
+            - @event_dispatcher
