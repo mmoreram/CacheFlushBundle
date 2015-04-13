@@ -4,6 +4,6 @@ services:
     # Event Dispatchers
     #
     cache_flusher.event_dispatcher:
-        class: %cache_flusher.event_dispatcher.class%
+        class: Mmoreram\CacheFlushBundle\EventDispatcher\CacheFlusherEventDispatcher
         arguments:
             - @event_dispatcher
