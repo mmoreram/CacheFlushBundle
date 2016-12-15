@@ -6,6 +6,7 @@ use-sort:
     sort-type: alph
     sort-direction: asc
 
+strict: true
 header: |
     /**
      * Cache Flusher Bundle for Symfony2
