@@ -11,14 +11,42 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
+declare(strict_types=1);
+
 namespace Mmoreram\CacheFlushBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
- * Class CacheFlushEvent
+ * Class CacheFlushEvent.
  */
-class CacheFlushEvent extends Event
+final class CacheFlushEvent extends Event
 {
+    /**
+     * @var KernelInterface
+     *
+     * Kernel
+     */
+    private $kernel;
 
+    /**
+     * CacheFlushEvent constructor.
+     *
+     * @param KernelInterface $kernel
+     */
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+    }
+
+    /**
+     * Get Kernel.
+     *
+     * @return KernelInterface
+     */
+    public function getKernel() : KernelInterface
+    {
+        return $this->kernel;
+    }
 }

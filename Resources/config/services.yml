@@ -3,5 +3,5 @@ services:
     cache_flusher:
         class: Mmoreram\CacheFlushBundle\Services\CacheFlusher
         arguments:
-            - @cache_flusher.event_dispatcher
-            - %kernel.cache_dir%
+            - "@cache_flusher.event_dispatcher"
+            - "@kernel"

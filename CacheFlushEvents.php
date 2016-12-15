@@ -11,10 +11,12 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
+declare(strict_types=1);
+
 namespace Mmoreram\CacheFlushBundle;
 
 /**
- * Class CacheFlushEvents
+ * Class CacheFlushEvents.
  */
 final class CacheFlushEvents
 {

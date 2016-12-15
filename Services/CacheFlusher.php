@@ -11,81 +11,85 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
+declare(strict_types=1);
+
 namespace Mmoreram\CacheFlushBundle\Services;
 
-use Mmoreram\CacheFlushBundle\EventDispatcher\CacheFlusherEventDispatcher;
+use Symfony\Component\HttpKernel\KernelInterface;
+
+use Mmoreram\CacheFlushBundle\EventDispatcher\CacheFlushEventDispatcher;
 
 /**
- * Class CacheFlusher
+ * Class CacheFlusher.
  */
-class CacheFlusher
+final class CacheFlusher
 {
     /**
-     * @var CacheFlusherEventDispatcher
+     * @var CacheFlushEventDispatcher
      *
      * Event dispatcher
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
 
     /**
-     * @var string
+     * @var KernelInterface
      *
-     * Cache path
+     * Kernel
      */
-    protected $cachePath;
+    private $kernel;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param CacheFlusherEventDispatcher $eventDispatcher Event dispatcher
-     * @param string                      $cachePath       Cache path
+     * @param CacheFlushEventDispatcher $eventDispatcher
+     * @param KernelInterface           $kernel
      */
     public function __construct(
-        CacheFlusherEventDispatcher $eventDispatcher,
-        $cachePath
-    )
-    {
+        CacheFlushEventDispatcher $eventDispatcher,
+        KernelInterface $kernel
+    ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->cachePath = $cachePath;
+        $this->kernel = $kernel;
     }
 
     /**
-     * Flush all the cache
+     * Flush all the cache.
      *
-     * @return $this Self object
+     * @param KernelInterface $kernel
      */
-    public function flushCache()
+    public function flushCache(KernelInterface $kernel = null)
     {
-        $this
-            ->eventDispatcher
-            ->dispatchCachePreFlush();
-
-        $this->deleteCache($this->cachePath);
+        $kernel = $kernel ?? $this->kernel;
 
         $this
             ->eventDispatcher
-            ->dispatchCacheOnFlush();
+            ->dispatchCachePreFlush(
+                $kernel
+            );
+
+        $this->deleteCache($kernel->getCacheDir());
+
+        $this
+            ->eventDispatcher
+            ->dispatchCacheOnFlush(
+                $kernel
+            );
     }
 
     /**
-     * Delete folder
+     * Delete folder.
      *
-     * @param string $path Path
-     *
-     * @return $this Self object
+     * @param string $path
      */
-    protected function deleteCache($path)
+    private function deleteCache($path)
     {
         $files = glob($path . '/*');
 
         foreach ($files as $file) {
-
             is_dir($file)
                 ? $this->deleteCache($file)
                 : unlink($file);
         }
         rmdir($path);
-
-        return;
     }
 }

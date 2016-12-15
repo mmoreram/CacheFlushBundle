@@ -11,27 +11,30 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
+declare(strict_types=1);
+
 namespace Mmoreram\CacheFlushBundle\EventDispatcher;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 use Mmoreram\CacheFlushBundle\CacheFlushEvents;
 use Mmoreram\CacheFlushBundle\Event\CacheFlushEvent;
 
 /**
- * Class CacheFlusherEventDispatcher
+ * Class CacheFlushEventDispatcher.
  */
-class CacheFlusherEventDispatcher
+final class CacheFlushEventDispatcher
 {
     /**
      * @var EventDispatcherInterface
      *
      * Event dispatcher
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param EventDispatcherInterface $eventDispatcher Event Dispatcher
      */
@@ -41,38 +44,34 @@ class CacheFlusherEventDispatcher
     }
 
     /**
-     * Dispatch event before cache flushing
+     * Dispatch event before cache flushing.
      *
-     * @return $this Self object
+     * @var KernelInterface $kernel
      */
-    public function dispatchCachePreFlush()
+    public function dispatchCachePreFlush(KernelInterface $kernel)
     {
-        $event = new CacheFlushEvent();
+        $event = new CacheFlushEvent($kernel);
         $this
             ->eventDispatcher
             ->dispatch(
                 CacheFlushEvents::PRE_CACHE_FLUSH_EVENT,
                 $event
             );
-
-        return $this;
     }
 
     /**
-     * Dispatch event after cache flushing
+     * Dispatch event after cache flushing.
      *
-     * @return $this Self object
+     * @var KernelInterface $kernel
      */
-    public function dispatchCacheOnFlush()
+    public function dispatchCacheOnFlush(KernelInterface $kernel)
     {
-        $event = new CacheFlushEvent();
+        $event = new CacheFlushEvent($kernel);
         $this
             ->eventDispatcher
             ->dispatch(
                 CacheFlushEvents::ON_CACHE_FLUSH_EVENT,
                 $event
             );
-
-        return $this;
     }
 }

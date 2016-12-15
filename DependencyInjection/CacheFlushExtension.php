@@ -11,34 +11,39 @@
  * @author Marc Morera <yuhu@mmoreram.com>
  */
 
+declare(strict_types=1);
+
 namespace Mmoreram\CacheFlushBundle\DependencyInjection;
 
-use Elcodi\Bundle\CoreBundle\DependencyInjection\Abstracts\AbstractExtension;
+use Mmoreram\BaseBundle\DependencyInjection\BaseExtension;
 
 /**
- * Class CacheFlushExtension
+ * Class CacheFlushExtension.
  */
-class CacheFlushExtension extends AbstractExtension
+final class CacheFlushExtension extends BaseExtension
 {
     /**
-     * @var string
+     * Returns the extension alias, same value as extension name.
      *
-     * Extension name
+     * @return string The alias
      */
-    const EXTENSION_NAME = 'cache_flush';
-
-    /**
-     * Get the Config file location
-     *
-     * @return string Config file location
-     */
-    public function getConfigFilesLocation()
+    public function getAlias()
     {
-        return __DIR__.'/../Resources/config';
+        return 'cache_flush';
     }
 
     /**
-     * Config files to load
+     * Get the Config file location.
+     *
+     * @return string
+     */
+    public function getConfigFilesLocation() : string
+    {
+        return __DIR__ . '/../Resources/config';
+    }
+
+    /**
+     * Config files to load.
      *
      * return array(
      *      'file1.yml',
@@ -48,23 +53,13 @@ class CacheFlushExtension extends AbstractExtension
      *
      * @param array $config Config
      *
-     * @return array Config files
+     * @return array
      */
-    public function getConfigFiles(array $config)
+    public function getConfigFiles(array $config) : array
     {
         return [
             'services',
-            'eventDispatchers'
+            'eventDispatchers',
         ];
-    }
-
-    /**
-     * Returns the extension alias, same value as extension name
-     *
-     * @return string The alias
-     */
-    public function getAlias()
-    {
-        return self::EXTENSION_NAME;
     }
 }
