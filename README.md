@@ -4,10 +4,6 @@
 
 -----
 
-> The minimum requirements of this bundle is **PHP 7.1** and **Symfony 3.2** 
-> because the bundle is using features on both versions. If you're not using
-> them yet, I encourage you to do it.
-
 Flush all your kernel content with a simple Symfony service.
 
 ``` php
