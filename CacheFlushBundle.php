@@ -30,7 +30,9 @@ final class CacheFlushBundle extends BaseBundle
     /**
      * Returns the bundle's container extension.
      *
-     * @return ExtensionInterface
+     * @return ExtensionInterface|null The container extension
+     *
+     * @throws \LogicException
      */
     public function getContainerExtension()
     {
@@ -38,11 +40,13 @@ final class CacheFlushBundle extends BaseBundle
     }
 
     /**
-     * Create instance of current bundle, and return dependent bundle namespaces.
+     * Return all bundle dependencies.
      *
-     * @return array Bundle instances
+     * Values can be a simple bundle namespace or its instance
+     *
+     * @return array
      */
-    public static function getBundleDependencies(KernelInterface $kernel)
+    public static function getBundleDependencies(KernelInterface $kernel) : array
     {
         return [
             FrameworkBundle::class,
